@@ -3,6 +3,16 @@ README
 
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
 
+### Use `purrr` to feed four cats
+
+Imagine having 4 cats. Four real cats who need food, care and ... to live a happy life. Every now and then it's time to feed them. Our real life algorithm would be:
+
+-   give food to cat 1
+-   give food to cat 2
+-   ...
+
+In real life we would have to have some place for the cats and their bowls. In R the place for cats and their bowls can be a `data.frame` (or `tibble`)
+
 Turn your for loop into a purrr map function.
 
 We start with cats, because why not.
@@ -22,11 +32,9 @@ cats <-
 
 We completely forgat we have ifelse statements.
 
-Only good cats get premium quality super-awesome-food. Bad cats get
-normal food.
+Only good cats get premium quality super-awesome-food. Bad cats get normal food.
 
-We don’t want to type to much, we are data scientist, and lazy. So we
-create a function to do our work.
+We don't want to type to much, we are data scientist, and lazy. So we create a function to do our work.
 
 ``` r
 good_kitty <-function(x){
@@ -44,9 +52,7 @@ good_kitty(FALSE)
 
     ## [1] "Normal"
 
-We start with a for loop to add information to the dataframe. We want to
-do something on every row. We want to run the good\_kitty function on
-every row in the Good column.
+We start with a for loop to add information to the dataframe. We want to do something on every row. We want to run the good\_kitty function on every row in the Good column.
 
 ``` r
 cats$Food <- NA
