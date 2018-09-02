@@ -101,7 +101,6 @@ Now onto purrr:
 ``` r
 library(purrr)
 cats$Food <- NA
-
 cats$Food <- purrr::map_chr(.x = cats$Good, .f = good_kitty)
 cats
 ```
@@ -119,7 +118,8 @@ cats
 Some of our cats don’t want cuddles.
 
 ``` r
-pet_cat <- function(name){
+pet_cat <- 
+    function(name){
     if(name %in% c("Margaret", "Tibbles")){
         "pet"
     }else{
@@ -146,6 +146,22 @@ for (cat in 1:nrow(cats)){
     cats$Food[cat] <- good_kitty(cats$Good[cat])
     cats$Petting[cat] <- pet_cat(cats$Name[cat])
 }
+cats
+```
+
+    ## # A tibble: 4 x 4
+    ##   Name     Good  Food    Petting              
+    ##   <chr>    <lgl> <chr>   <chr>                
+    ## 1 Suzie    TRUE  Premium don't pet, stay away!
+    ## 2 Margaret FALSE Normal  pet                  
+    ## 3 Donald   FALSE Normal  don't pet, stay away!
+    ## 4 Tibbles  TRUE  Premium pet
+
+``` r
+cats$Food <- NA
+cats$Petting <- NA
+cats$Food <- map_chr(cats$Good, good_kitty)
+cats$Petting <- map_chr(cats$Name, pet_cat)
 cats
 ```
 
