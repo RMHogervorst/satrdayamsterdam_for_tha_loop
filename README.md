@@ -44,11 +44,13 @@ good_kitty(FALSE)
 
     ## [1] "Normal"
 
-We start with a for loop to add information to the dataframe.
+We start with a for loop to add information to the dataframe. We want to
+do something on every row. We want to run the good\_kitty function on
+every row in the Good column.
 
 ``` r
 cats$Food <- NA
-for(cat in seq_along(cats$Name)){
+for(cat in 1:nrow(cats)){
     cats$Food[cat] <- good_kitty(cats$Good[cat])
 }
 cats
