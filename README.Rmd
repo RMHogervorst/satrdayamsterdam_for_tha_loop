@@ -1,0 +1,14 @@
+---
+title: "README"
+output: github_document
+---
+
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Turn your for loop into a purrr map function.
+
+
