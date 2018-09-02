@@ -3,7 +3,19 @@ title: "README"
 output: github_document
 ---
 
+
+
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
+
+### Use `purrr` to feed four cats
+
+Imagine having 4 cats. Four real cats who need food, care and ... to live a happy life. Every now and then it's time to feed them. Our real life algorithm would be:
+
+- give food to cat 1
+- give food to cat 2
+- ...
+
+In real life we would have to have some place for the cats and their bowls. In R the place for cats and their bowls can be a `data.frame` (or `tibble`)
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
