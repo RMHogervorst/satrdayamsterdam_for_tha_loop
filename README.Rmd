@@ -9,11 +9,18 @@ output: github_document
 
 ### Use `purrr` to feed four cats
 
-Imagine having 4 cats. Four real cats who need food, care and ... to live a happy life. Every now and then it's time to feed them. Our real life algorithm would be:
+Imagine having 4 cats. Four real cats who need food, care and love to live a 
+happy life. They start to meow, so it's time to feed them. 
+Our real life algorithm would be:
 
 - give food to cat 1
 - give food to cat 2
 - ...
+
+But life is not that simple. Some of your cats are good cats and some are bad.
+You want to spoil the good cats and give normal food to the bad cats.
+
+### Elements for the four cats problem
 
 In real life we would have to have some place for the cats and their bowls. In R the place for cats and their bowls can be a `data.frame` (or `tibble`)
 
@@ -21,9 +28,7 @@ In real life we would have to have some place for the cats and their bowls. In R
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Turn your for loop into a purrr map function.
-
-We start with cats, because why not.
+We start with cats. The cats have a name and a Goodness.
 
 
 ```{r}
@@ -32,30 +37,38 @@ cats <-
     tribble(
     ~Name, ~Good,
     "Suzie", TRUE,
-    "George", TRUE,
-    "Fred", FALSE,
+    "Margaret", FALSE,
     "Donald", FALSE,
     "Tibbles", TRUE
 )
 ```
 
-We completely forgat we have ifelse statements.
-
+Now we have to feed the cats. 
 Only good cats get premium quality super-awesome-food. Bad cats get normal food.
 
-We don't want to type to much, we are data scientist, and lazy. So we create a 
+
+Now if you have used dplyr or ifelse statements before, this example is super
+silly and inefficient. But for people coming from different programming 
+languages and people who started out with for loops, this is the approach you
+would use.
+
+To feed the cat, we have to determine if the cat is Good or not. 
+We don't want to type to much, we are lazy data scientist after all. So we create a 
 function to do our work.
 
 ```{r}
+# if the thing that goes in is TRUE you return "Premium", otherwise return "Normal"
 good_kitty <-function(x){
     if(x){"Premium"} else{
             "Normal"
     }}
 good_kitty(TRUE)
-good_kitty(FALSE)
+good_kitty(FALSE) 
+# you try for yourself what happens 
+# when you put in other values like numbers, letters, missings etc.
 ```
 
-
+## The for  loop
 We start with a for loop to add information to the dataframe.
 We want to do something on every row. We want to run the good_kitty function
 on every row in the Good column.
@@ -70,8 +83,8 @@ cats
 ```
 
 
-
-Now onto purrr
+## The purrr solution
+Now onto purrr:
 
 ```{r}
 library(purrr)

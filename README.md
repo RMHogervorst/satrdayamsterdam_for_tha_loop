@@ -5,17 +5,25 @@ README
 
 ### Use `purrr` to feed four cats
 
-Imagine having 4 cats. Four real cats who need food, care and ... to live a happy life. Every now and then it's time to feed them. Our real life algorithm would be:
+Imagine having 4 cats. Four real cats who need food, care and love to
+live a happy life. They start to meow, so it’s time to feed them. Our
+real life algorithm would be:
 
--   give food to cat 1
--   give food to cat 2
--   ...
+  - give food to cat 1
+  - give food to cat 2
+  - …
 
-In real life we would have to have some place for the cats and their bowls. In R the place for cats and their bowls can be a `data.frame` (or `tibble`)
+But life is not that simple. Some of your cats are good cats and some
+are bad. You want to spoil the good cats and give normal food to the bad
+cats.
 
-Turn your for loop into a purrr map function.
+### Elements for the four cats problem
 
-We start with cats, because why not.
+In real life we would have to have some place for the cats and their
+bowls. In R the place for cats and their bowls can be a `data.frame` (or
+`tibble`)
+
+We start with cats. The cats have a name and a Goodness.
 
 ``` r
 library(tibble)
@@ -23,20 +31,27 @@ cats <-
     tribble(
     ~Name, ~Good,
     "Suzie", TRUE,
-    "George", TRUE,
-    "Fred", FALSE,
+    "Margaret", FALSE,
     "Donald", FALSE,
     "Tibbles", TRUE
 )
 ```
 
-We completely forgat we have ifelse statements.
+Now we have to feed the cats. Only good cats get premium quality
+super-awesome-food. Bad cats get normal food.
 
-Only good cats get premium quality super-awesome-food. Bad cats get normal food.
+Now if you have used dplyr or ifelse statements before, this example is
+super silly and inefficient. But for people coming from different
+programming languages and people who started out with for loops, this is
+the approach you would use.
 
-We don't want to type to much, we are data scientist, and lazy. So we create a function to do our work.
+To feed the cat, we have to determine if the cat is Good or not. We
+don’t want to type to much, we are lazy data scientist after all. So
+we create a function to do our
+work.
 
 ``` r
+# if the thing that goes in is TRUE you return "Premium", otherwise return "Normal"
 good_kitty <-function(x){
     if(x){"Premium"} else{
             "Normal"
@@ -47,12 +62,21 @@ good_kitty(TRUE)
     ## [1] "Premium"
 
 ``` r
-good_kitty(FALSE)
+good_kitty(FALSE) 
 ```
 
     ## [1] "Normal"
 
-We start with a for loop to add information to the dataframe. We want to do something on every row. We want to run the good\_kitty function on every row in the Good column.
+``` r
+# you try for yourself what happens 
+# when you put in other values like numbers, letters, missings etc.
+```
+
+## The for loop
+
+We start with a for loop to add information to the dataframe. We want to
+do something on every row. We want to run the good\_kitty function on
+every row in the Good column.
 
 ``` r
 cats$Food <- NA
@@ -62,16 +86,17 @@ for(cat in 1:nrow(cats)){
 cats
 ```
 
-    ## # A tibble: 5 x 3
-    ##   Name    Good  Food   
-    ##   <chr>   <lgl> <chr>  
-    ## 1 Suzie   TRUE  Premium
-    ## 2 George  TRUE  Premium
-    ## 3 Fred    FALSE Normal 
-    ## 4 Donald  FALSE Normal 
-    ## 5 Tibbles TRUE  Premium
+    ## # A tibble: 4 x 3
+    ##   Name     Good  Food   
+    ##   <chr>    <lgl> <chr>  
+    ## 1 Suzie    TRUE  Premium
+    ## 2 Margaret FALSE Normal 
+    ## 3 Donald   FALSE Normal 
+    ## 4 Tibbles  TRUE  Premium
 
-Now onto purrr
+## The purrr solution
+
+Now onto purrr:
 
 ``` r
 library(purrr)
@@ -81,11 +106,10 @@ cats$Food <- purrr::map_chr(.x = cats$Good, .f = good_kitty)
 cats
 ```
 
-    ## # A tibble: 5 x 3
-    ##   Name    Good  Food   
-    ##   <chr>   <lgl> <chr>  
-    ## 1 Suzie   TRUE  Premium
-    ## 2 George  TRUE  Premium
-    ## 3 Fred    FALSE Normal 
-    ## 4 Donald  FALSE Normal 
-    ## 5 Tibbles TRUE  Premium
+    ## # A tibble: 4 x 3
+    ##   Name     Good  Food   
+    ##   <chr>    <lgl> <chr>  
+    ## 1 Suzie    TRUE  Premium
+    ## 2 Margaret FALSE Normal 
+    ## 3 Donald   FALSE Normal 
+    ## 4 Tibbles  TRUE  Premium
