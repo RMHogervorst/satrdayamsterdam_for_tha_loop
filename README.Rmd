@@ -3,7 +3,7 @@ title: "README"
 output: github_document
 ---
 
-
+Autohrs: Reigo Hendrikson
 
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
 
@@ -41,6 +41,10 @@ cats <-
     "Donald", FALSE,
     "Tibbles", TRUE
 )
+
+cats$Name <- paste(emo::ji("cat"), cats$Name)
+cats$Good <- ifelse(cats$Good, emo::ji("heart"), emo::ji("lightning"))
+cats
 ```
 
 Now we have to feed the cats. 
@@ -50,7 +54,7 @@ Only good cats get premium quality super-awesome-food. Bad cats get normal food.
 Now if you have used dplyr or ifelse statements before, this example is super
 silly and inefficient. But for people coming from different programming 
 languages and people who started out with for loops, this is the approach you
-would use.
+might use.
 
 To feed the cat, we have to determine if the cat is Good or not. 
 We don't want to type to much, we are lazy data scientist after all. So we create a 
@@ -58,10 +62,13 @@ function to do our work.
 
 ```{r}
 # if the thing that goes in is TRUE you return "Premium", otherwise return "Normal"
-good_kitty <-function(x){
-    if(x){"Premium"} else{
-            "Normal"
-    }}
+good_kitty <- function(x) {
+    if(x == emo::ji("heart")) {
+        emo::ji("cake")
+    } else {
+        emo::ji("bread")
+    }
+}
 good_kitty(TRUE)
 good_kitty(FALSE) 
 # you try for yourself what happens 
