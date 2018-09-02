@@ -94,4 +94,32 @@ cats$Food <- purrr::map_chr(.x = cats$Good, .f = good_kitty)
 cats
 ```
 
+# What if we do multiple things?
 
+Some of our cats don't want cuddles. 
+
+
+```{r}
+pet_cat <- function(name){
+    if(name %in% c("Margaret", "Tibbles")){
+        "pet"
+    }else{
+        "don't pet, stay away!"
+    }
+}
+pet_cat("Donald")
+pet_cat("Tibbles")
+```
+
+The for loop
+
+
+```{r}
+cats$Food <- NA
+cats$Petting <- NA
+for (cat in 1:nrow(cats)){
+    cats$Food[cat] <- good_kitty(cats$Good[cat])
+    cats$Petting[cat] <- pet_cat(cats$Name[cat])
+}
+cats
+```

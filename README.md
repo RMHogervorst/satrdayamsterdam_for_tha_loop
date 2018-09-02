@@ -113,3 +113,46 @@ cats
     ## 2 Margaret FALSE Normal 
     ## 3 Donald   FALSE Normal 
     ## 4 Tibbles  TRUE  Premium
+
+# What if we do multiple things?
+
+Some of our cats don’t want cuddles.
+
+``` r
+pet_cat <- function(name){
+    if(name %in% c("Margaret", "Tibbles")){
+        "pet"
+    }else{
+        "don't pet, stay away!"
+    }
+}
+pet_cat("Donald")
+```
+
+    ## [1] "don't pet, stay away!"
+
+``` r
+pet_cat("Tibbles")
+```
+
+    ## [1] "pet"
+
+The for loop
+
+``` r
+cats$Food <- NA
+cats$Petting <- NA
+for (cat in 1:nrow(cats)){
+    cats$Food[cat] <- good_kitty(cats$Good[cat])
+    cats$Petting[cat] <- pet_cat(cats$Name[cat])
+}
+cats
+```
+
+    ## # A tibble: 4 x 4
+    ##   Name     Good  Food    Petting              
+    ##   <chr>    <lgl> <chr>   <chr>                
+    ## 1 Suzie    TRUE  Premium don't pet, stay away!
+    ## 2 Margaret FALSE Normal  pet                  
+    ## 3 Donald   FALSE Normal  don't pet, stay away!
+    ## 4 Tibbles  TRUE  Premium pet
