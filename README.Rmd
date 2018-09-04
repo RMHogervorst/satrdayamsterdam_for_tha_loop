@@ -3,7 +3,7 @@ title: "README"
 output: github_document
 ---
 
-Autohrs: Reigo Hendrikson
+Authors: Reigo Hendrikson
 
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
 
