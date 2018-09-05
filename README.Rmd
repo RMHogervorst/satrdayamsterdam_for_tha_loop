@@ -69,8 +69,8 @@ good_kitty <- function(x) {
         emo::ji("bread")
     }
 }
-good_kitty(TRUE)
-good_kitty(FALSE) 
+good_kitty(emo::ji("heart"))
+good_kitty(emo::ji("lightning")) 
 # you try for yourself what happens 
 # when you put in other values like numbers, letters, missings etc.
 ```
