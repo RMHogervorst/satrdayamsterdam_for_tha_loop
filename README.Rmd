@@ -26,25 +26,26 @@ Let's work out this 'problem' in R. In real life we would have to have some plac
 
 Let's start with the cats. The cats have a name and a temperament: they are good or bad. Let's call that goodness^[Incidently this is a great way to label things. Don't create a gender column with male or female (or other), but make the label the description: female TRUE/FALSE].
 
-```{r}
+```{r message=FALSE}
 library(tibble)
 library(dplyr)
 library(purrr)
-cats <- 
-    tribble(
+cats <- tribble(
     ~Name, ~Good,
     "Suzie", TRUE,
     "Margaret", FALSE,
     "Donald", FALSE,
     "Tibbles", TRUE
     )
-cats$Name <- paste(emo::ji("cat"), cats$Name)
+
+as_cat <- function(name) paste(emo::ji("cat"), name)
+cats$Name <- as_cat(cats$Name)
 cats$Good <- ifelse(cats$Good, emo::ji("heart"), emo::ji("lightning"))
 cats
 ```
 Now we have to feed the cats. Only good cats get premium quality super-awesome-food. Bad cats get normal food.
 
-If you have used dplyr or ifelse statements before, this example is super silly and inefficient. But for people coming from different programming languages and people who started out with for loops, this is the approach you might use.
+If you have used `dplyr` or `ifelse` statements before, this example is super silly and inefficient. But for people coming from different programming languages and people who started out with for loops, this is the approach you might use.
 
 To feed the cat, we have to determine if the cat is Good or not. We don't want to type to much, we are lazy data scientist after all. So we create a function to do our work.
 
@@ -64,16 +65,15 @@ want to be pet. Margareth and Donald don't want to be cuddled.
 So let's create a function that takes care of that.
 
 ```{r}
-pet_cat <- 
-    function(name){
-    if(name %in% c("Margaret", "Tibbles")){
+pet_cat <- function(name){
+    if(name %in%  as_cat(c("Margaret", "Tibbles"))){
         "pet"
     }else{
         "don't pet, stay away!"
     }
 }
-pet_cat("Donald")
-pet_cat("Tibbles")
+pet_cat(as_cat("Donald"))
+pet_cat(as_cat("Tibbles"))
 ```
 
 
