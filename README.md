@@ -22,7 +22,7 @@ Elements of the four cats problem
 
 Let's work out this 'problem' in R. In real life we would have to have some place for the cats and their bowls. In R the place for cats and their bowls can be a data.frame (or tibble).
 
-Let's start with the cats. The cats have a name and a temperament: they are good (❤️) or bad (⚡). Let's call that goodness[1].
+Let's start with the cats. The cats have a name and a temperament: they are good (❤️) or bad (🌩). Let's call that goodness[1].
 
 ``` r
 library(tibble)
@@ -158,16 +158,20 @@ For loops are very often used and very handy. But they do require a bit of menta
 With the `purrr` package we approach the problem from another direction: we think about small steps. We want to execute the pet and feeding functions on every row, we do not care about the specifics of the row number.
 
 In the purrr style of thinking (functional programming) we want to 'map' the function to the data. We do care about the outcome of every execution, we want that to be character.
+Before showing the purrr solution we remove `Food` and `Petting` from cats (this is necessary evil).
+
+``` r
+# reset the Food and Petting
+cats$Food <- NULL
+cats$Petting <- NULL
+```
 
 Let's use `map_chr`
 
 ``` r
-# reset the Food and Petting
-cats$Food <- NA
-cats$Petting <- NA
-# execute on every element of cats$Good the good kitty function
+# execute on every element of cats$Good the good kitty function and 
+# then cats$Name on pet_cat function
 cats$Food <- map_chr(cats$Good, good_kitty)
-# execute on every element of cats$Name the pet_cat function
 cats$Petting <- map_chr(cats$Name, pet_cat)
 cats
 ```
