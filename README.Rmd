@@ -3,7 +3,7 @@ title: "README"
 output: github_document
 ---
 
-Authors: Reigo Hendrikson
+Authors: Reigo Hendrikson, ...
 
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
 
@@ -24,7 +24,7 @@ But life is not that simple. Some of your cats are good cats and some are bad. Y
 
 Let's work out this 'problem' in R. In real life we would have to have some place for the cats and their bowls. In R the place for cats and their bowls can be a data.frame (or tibble).
 
-Let's start with the cats. The cats have a name and a temperament: they are good or bad. Let's call that goodness^[Incidently this is a great way to label things. Don't create a gender column with male or female (or other), but make the label the description: female TRUE/FALSE].
+Let's start with the cats. The cats have a name and a temperament: they are good (`r emo::ji("heart")`) or bad (`r emo::ji("lightning")`). Let's call that goodness^[Incidently this is a great way to label things. Don't create a gender column with male or female (or other), but make the label the description: female TRUE/FALSE].
 
 ```{r message=FALSE}
 library(tibble)
@@ -39,8 +39,11 @@ cats <- tribble(
     )
 
 as_cat <- function(name) paste(emo::ji("cat"), name)
+as_temperament <- function(good) ifelse(good, emo::ji("heart"), emo::ji("lightning"))
+
 cats$Name <- as_cat(cats$Name)
-cats$Good <- ifelse(cats$Good, emo::ji("heart"), emo::ji("lightning"))
+cats$Good <- as_temperament(cats$Good)
+
 cats
 ```
 Now we have to feed the cats. Only good cats get premium quality super-awesome-food. Bad cats get normal food.
@@ -58,6 +61,15 @@ good_kitty <- function(x) {
     }
 }
 good_kitty(cats$Good[1])
+
+# alternative function name
+# feed_with <- function(temperament) {
+#     if (temperament == as_temperament(T)) { # 
+#         paste0(emo::ji("cake")," Premium food")
+#     } else {
+#         paste0(emo::ji("bread"), " Normal food")
+#     }
+# }
 ```
 
 We also want to cuddle our cats, unfortunately some of the cats don't

@@ -1,7 +1,7 @@
 README
 ================
 
-Authors: Reigo Hendrikson
+Authors: Reigo Hendrikson, ...
 
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
 
@@ -22,7 +22,7 @@ Elements of the four cats problem
 
 Let's work out this 'problem' in R. In real life we would have to have some place for the cats and their bowls. In R the place for cats and their bowls can be a data.frame (or tibble).
 
-Let's start with the cats. The cats have a name and a temperament: they are good or bad. Let's call that goodness[1].
+Let's start with the cats. The cats have a name and a temperament: they are good (❤️) or bad (⚡). Let's call that goodness[1].
 
 ``` r
 library(tibble)
@@ -37,8 +37,11 @@ cats <- tribble(
     )
 
 as_cat <- function(name) paste(emo::ji("cat"), name)
+as_temperament <- function(good) ifelse(good, emo::ji("heart"), emo::ji("lightning"))
+
 cats$Name <- as_cat(cats$Name)
-cats$Good <- ifelse(cats$Good, emo::ji("heart"), emo::ji("lightning"))
+cats$Good <- as_temperament(cats$Good)
+
 cats
 ```
 
@@ -46,8 +49,8 @@ cats
     ##   Name        Good 
     ##   <chr>       <chr>
     ## 1 🐱 Suzie    ❤️   
-    ## 2 🐱 Margaret ⚡   
-    ## 3 🐱 Donald   ⚡   
+    ## 2 🐱 Margaret 🌩   
+    ## 3 🐱 Donald   🌩   
     ## 4 🐱 Tibbles  ❤️
 
 Now we have to feed the cats. Only good cats get premium quality super-awesome-food. Bad cats get normal food.
@@ -68,6 +71,17 @@ good_kitty(cats$Good[1])
 ```
 
     ## [1] "🍰 Premium food"
+
+``` r
+# alternative function name
+# feed_with <- function(temperament) {
+#     if (temperament == as_temperament(T)) { # 
+#         paste0(emo::ji("cake")," Premium food")
+#     } else {
+#         paste0(emo::ji("bread"), " Normal food")
+#     }
+# }
+```
 
 We also want to cuddle our cats, unfortunately some of the cats don't want to be pet. Margareth and Donald don't want to be cuddled. So let's create a function that takes care of that.
 
@@ -118,8 +132,8 @@ cats
     ##   Name        Good  Food            Petting              
     ##   <chr>       <chr> <chr>           <chr>                
     ## 1 🐱 Suzie    ❤️    🍰 Premium food don't pet, stay away!
-    ## 2 🐱 Margaret ⚡    🍞 Normal food  pet                  
-    ## 3 🐱 Donald   ⚡    🍞 Normal food  don't pet, stay away!
+    ## 2 🐱 Margaret 🌩    🍞 Normal food  pet                  
+    ## 3 🐱 Donald   🌩    🍞 Normal food  don't pet, stay away!
     ## 4 🐱 Tibbles  ❤️    🍰 Premium food pet
 
 A 'for loop' is you telling your computer: 'I will only tell you this once, but you must do it to everything in the collection'. To make that work the computer needs to know what the iterator part is: `(something in collection)` in this case `(cat in 1:nrow(cats))`, what needs to happen inside the loop: `{actions}`, and the use of a variable that takes a different value every iteration `something` or in this case `cat`. People often use `i` for this value `for (i in list)` but as you can see, it really doesn't matter.
@@ -162,8 +176,8 @@ cats
     ##   Name        Good  Food            Petting              
     ##   <chr>       <chr> <chr>           <chr>                
     ## 1 🐱 Suzie    ❤️    🍰 Premium food don't pet, stay away!
-    ## 2 🐱 Margaret ⚡    🍞 Normal food  pet                  
-    ## 3 🐱 Donald   ⚡    🍞 Normal food  don't pet, stay away!
+    ## 2 🐱 Margaret 🌩    🍞 Normal food  pet                  
+    ## 3 🐱 Donald   🌩    🍞 Normal food  don't pet, stay away!
     ## 4 🐱 Tibbles  ❤️    🍰 Premium food pet
 
 The results are the same.
