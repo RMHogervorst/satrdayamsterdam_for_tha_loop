@@ -131,6 +131,7 @@ for (cat in 1:nrow(cats)){
 cats
 ```
 
+Now onto purrr
 
 ```{r}
 cats$Food <- NA
