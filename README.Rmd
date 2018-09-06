@@ -73,7 +73,7 @@ good_kitty(cats$Good[1])
 ```
 
 We also want to cuddle our cats, unfortunately some of the cats don't
-want to be pet. Margareth and Donald don't want to be cuddled. 
+want to be pet. Suzie and Donald don't want to be cuddled. 
 So let's create a function that takes care of that.
 
 ```{r}
