@@ -3,7 +3,7 @@ title: "README"
 output: github_document
 ---
 
-Authors: Reigo Hendrikson, ...
+Authors: Reigo Hendrikson, Roel M. Hogervorst , and Suthira Owlarn
 
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
 
@@ -38,14 +38,22 @@ cats <- tribble(
     "Tibbles", TRUE
     )
 
-as_cat <- function(name) paste(emo::ji("cat"), name)
-as_temperament <- function(good) ifelse(good, emo::ji("heart"), emo::ji("lightning"))
+as_cat <- 
+    function(name){
+        paste(emo::ji("cat"), name)
+    } 
+
+as_temperament <- 
+    function(good) {
+        ifelse(good, emo::ji("heart"), emo::ji("lightning"))
+}
 
 cats$Name <- as_cat(cats$Name)
 cats$Good <- as_temperament(cats$Good)
 
 cats
 ```
+
 Now we have to feed the cats. Only good cats get premium quality super-awesome-food. Bad cats get normal food.
 
 If you have used `dplyr` or `ifelse` statements before, this example is super silly and inefficient. But for people coming from different programming languages and people who started out with for loops, this is the approach you might use.
@@ -53,13 +61,15 @@ If you have used `dplyr` or `ifelse` statements before, this example is super si
 To feed the cat, we have to determine if the cat is Good or not. We don't want to type to much, we are lazy data scientist after all. So we create a function to do our work.
 
 ```{r}
-good_kitty <- function(x) {
+good_kitty <- 
+    function(x) {
     if(x == emo::ji("heart")) {
         paste0(emo::ji("cake")," Premium food")
     } else {
         paste0(emo::ji("bread"), " Normal food")
     }
-}
+    }
+
 good_kitty(cats$Good[1])
 
 # alternative function name
@@ -77,7 +87,8 @@ want to be pet. Suzie and Donald don't want to be cuddled.
 So let's create a function that takes care of that.
 
 ```{r}
-pet_cat <- function(name){
+pet_cat <- 
+    function(name){
     if(name %in%  as_cat(c("Margaret", "Tibbles"))){
         "pet"
     }else{
@@ -107,6 +118,11 @@ approach. And it is not wrong to do this in R too.
 # and for the petting to take place. 
 cats$Food <- NA
 cats$Petting <- NA
+```
+
+Then we start a 'for loop':
+
+```{r}
 for (cat in 1:nrow(cats)){
     cats$Food[cat] <- good_kitty(cats$Good[cat])
     cats$Petting[cat] <- pet_cat(cats$Name[cat])
@@ -123,7 +139,7 @@ variable that takes a different value every iteration `something` or in this cas
 
 Let's get into a bit more details
 
-### index
+### What's going on in the for loop?
 
 inside the loop we see `cats$Food[cat]`, we're taking the `Food` column in the `cats` data.frame. And then we index `[]` it. 
 `cats$Food[1]` would take the first item in this collection, `cats$Food[2]` the second, etc.
@@ -149,7 +165,7 @@ With the `purrr` package we approach the problem from another direction:
 we think about small steps. We want to execute the pet and feeding functions on every row, we do not care about the specifics of the row number. 
 
 In the purrr style of thinking (functional programming) we want to 'map' the function to the data. We do care about the outcome of every execution, we want that to be character.  
-Before showing the purrr solution we remove `Food` and `Petting` from cats (this is necessary evil).
+Before showing the purrr solution we remove `Food` and `Petting` from cats (this is necessary evil, of if this is really upsetting to you, we wait for half a day before starting again).
 
 ```{r}
 # reset the Food and Petting
