@@ -3,7 +3,7 @@ title: "README"
 output: github_document
 ---
 
-Authors: Reigo Hendrikson, Roel M. Hogervorst , and Suthira Owlarn
+Authors: Reigo Hendrikson and Roel M. Hogervorst
 
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
 
